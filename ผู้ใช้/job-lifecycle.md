@@ -35,7 +35,12 @@ The complete sequence of phases of a job is the lifecycle. The steps are:
 1. OPTIONAL Install [`cache components`](/user/caching)
 1. `before_install`
 1. `install`
-1. `before_script`
+1. `before_script`#!/bin/bash
+set -ev
+bundle exec rake:units
+if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+  bundle exec rake test:integration
+fi
 1. `script`
 1. OPTIONAL `before_cache` (if and only if caching is effective)
 1. `after_success` or `after_failure`
